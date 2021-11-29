@@ -1,7 +1,6 @@
 import Notes from './pages/notes';
-import '../node_modules/react-grid-layout/css/styles.css';
-import '../node_modules/react-resizable/css/styles.css';
-
+import '/node_modules/react-grid-layout/css/styles.css';
+import
 function App() {
   return (
     <div>
