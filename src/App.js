@@ -1,12 +1,15 @@
-import Notes from './pages/notes';
-import '../node_modules/react-grid-layout/css/styles.css';
-import '../node_modules/react-resizable/css/styles.css';
+import * as React from 'react';
+import classes from './App.module.css'
+import Box from '@mui/material/Box';
+import Login from './pages/login/login';
+//import Notes from './pages/notes/notes';
 
 function App() {
   return (
-    <div>
-      <Notes/>
-    </div>
+    <Box className={classes.parentApp}>
+      {/* <Notes/> */}
+      <Login/>
+    </Box>
   );
 }
 
