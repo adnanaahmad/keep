@@ -1,15 +1,14 @@
 import * as React from 'react';
-import classes from './App.module.css'
-import Box from '@mui/material/Box';
+//import classes from './App.module.css'
 import Login from './pages/login/login';
 //import Notes from './pages/notes/notes';
 
 function App() {
   return (
-    <Box className={classes.parentApp}>
+    <React.Fragment>
       {/* <Notes/> */}
       <Login/>
-    </Box>
+    </React.Fragment>
   );
 }
 
