@@ -38,6 +38,9 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+
 
 const drawerWidth = 240;
 
@@ -62,16 +65,6 @@ const closedMixin = (theme) => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
@@ -80,17 +73,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     boxSizing: 'border-box',
     ...(open && {
       ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
+      '& .MuiDrawer-paper': {...openedMixin(theme), top: '64px'},
     }),
     ...(!open && {
       ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
+      '& .MuiDrawer-paper': {...closedMixin(theme), top: '64px'},
     }),
   }),
 );
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
-export default function Notes() {
+function NavigationModule() {
   const [open, setOpen] = React.useState(false);
+  const colorMode = React.useContext(ColorModeContext);
 
   const handleDrawerToggle = () => {
     open ? setOpen(false) : setOpen(true);
@@ -107,7 +102,7 @@ export default function Notes() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} color="transparent" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} variant="outlined">
+      <AppBar position="fixed" open={open} color="transparent" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} sx={{width: '100%'}}>
             <Stack direction={'row'} alignItems={'center'}>
@@ -122,17 +117,20 @@ export default function Notes() {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" noWrap component="div">
+              <Typography variant="h6" noWrap component="div" color={'text.primary'}>
                 Notes
               </Typography>
             </Stack>
             <Stack direction={'row'} alignItems={'center'}>
+              <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+                <DarkModeOutlinedIcon/>
+              </IconButton>
             </Stack>
           </Stack>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <Toolbar />
+        {/* <Toolbar /> */}
         <List>
           {listItems.map((node, index) => (
             <ListItemButton
@@ -157,8 +155,8 @@ export default function Notes() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>
+        
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -188,5 +186,35 @@ export default function Notes() {
         </Typography>
       </Box>
     </Box>
+  );
+}
+
+export default function ToggleColorMode() {
+  const [mode, setMode] = React.useState('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode],
+  );
+
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <NavigationModule />
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
