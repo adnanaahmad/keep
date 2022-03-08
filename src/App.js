@@ -5,10 +5,11 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 //import classes from './App.module.css'
-import Login from './pages/login/login';
-import Notes from './pages/notes/notes';
-import Signup from './pages/signUp/signup';
+const Login = React.lazy(() => import('./pages/login/login'));
+const Notes = React.lazy(() => import('./pages/notes/notes'));
+const Signup = React.lazy(() => import('./pages/signUp/signup'));
 
 function App() {
   const defaultRouteHanler = () => {
@@ -17,6 +18,7 @@ function App() {
     )
   }
   return (
+      <React.Suspense fallback={<CircularProgress />}>
         <Router>
           <Switch>
             <Route exact path={'/'} render={defaultRouteHanler}/>
@@ -30,7 +32,8 @@ function App() {
               <Notes/>
             </Route>
           </Switch>
-      </Router>
+        </Router>
+      </React.Suspense>
   );
 }
 
