@@ -32,9 +32,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { Stack } from '@mui/material';
+import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 
 const drawerWidth = 240;
 
@@ -93,6 +96,14 @@ export default function Notes() {
     open ? setOpen(false) : setOpen(true);
   };
 
+  const listItems = [
+    {name: 'Notes', icon: <StickyNote2OutlinedIcon/>},
+    {name: 'Label', icon: <LabelOutlinedIcon/>},
+    {name: 'Edit Label', icon: <EditOutlinedIcon/>},
+    {name: 'Archive', icon: <ArchiveOutlinedIcon/>},
+    {name: 'Trash', icon: <DeleteOutlinedIcon/>},
+  ];
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -123,9 +134,9 @@ export default function Notes() {
       <Drawer variant="permanent" open={open}>
         <Toolbar />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {listItems.map((node, index) => (
             <ListItemButton
-              key={text}
+              key={node.name}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
@@ -139,9 +150,9 @@ export default function Notes() {
                   justifyContent: 'center',
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {node.icon}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={node.name} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           ))}
         </List>
