@@ -9,9 +9,14 @@ import TextField from '@mui/material/TextField';
 //import classes from './login.module.css';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {toggleBorder} from '../../shared/styles/debugging-border';
+import { useHistory } from "react-router-dom";
 
 function Signup() {
     const isBorder = toggleBorder;
+    const history = useHistory();
+    function login(path) {
+        history.push(path);
+    }
     return (
         <React.Fragment>
             <Stack justifyContent={'center'} alignItems={'center'} sx={{border: isBorder ? '2px solid red' : 'none', height: '100vh', paddingX:'.5rem'}}>
@@ -35,7 +40,7 @@ function Signup() {
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
                         <Button variant='contained' size="small" disableElevation>Next</Button>
-                        <Button size="small" sx={{textTransform: 'none'}}>Login instead</Button>
+                        <Button size="small" sx={{textTransform: 'none'}} onClick={() => login('/login') }>Login instead</Button>
                     </CardActions>
                 </Card>
             </Stack>
