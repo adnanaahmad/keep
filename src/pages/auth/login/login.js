@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import classes from './login.module.css';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import {toggleBorder} from '../../shared/styles/debugging-border';
+import {toggleBorder} from '../../../shared/styles/debugging-border';
 import { useHistory } from "react-router-dom";
 
 function Login() {

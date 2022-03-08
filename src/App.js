@@ -6,10 +6,9 @@ import {
   Redirect
 } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
-//import classes from './App.module.css'
-const Login = React.lazy(() => import('./pages/login/login'));
+const Signup = React.lazy(() => import('./pages/auth/signUp/signup'));
+const Login = React.lazy(() => import('./pages/auth/login/login'));
 const Notes = React.lazy(() => import('./pages/notes/notes'));
-const Signup = React.lazy(() => import('./pages/signUp/signup'));
 
 function App() {
   const defaultRouteHanler = () => {

@@ -19,71 +19,18 @@
 // }
 // export default Notes;
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Stack } from '@mui/material';
-import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import AppHeader from './appHeader/appHeader';
+import AppSideNav from './appSideNav/appSideNav';
+import {toggleBorder} from '../../shared/styles/debugging-border';
 
-
-const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': {...openedMixin(theme), top: '64px'},
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': {...closedMixin(theme), top: '64px'},
-    }),
-  }),
-);
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const isBorder = toggleBorder;
 
-function NavigationModule() {
+function NavigationPage() {
   const [open, setOpen] = React.useState(false);
   const colorMode = React.useContext(ColorModeContext);
 
@@ -91,71 +38,12 @@ function NavigationModule() {
     open ? setOpen(false) : setOpen(true);
   };
 
-  const listItems = [
-    {name: 'Notes', icon: <StickyNote2OutlinedIcon/>},
-    {name: 'Label', icon: <LabelOutlinedIcon/>},
-    {name: 'Edit Label', icon: <EditOutlinedIcon/>},
-    {name: 'Archive', icon: <ArchiveOutlinedIcon/>},
-    {name: 'Trash', icon: <DeleteOutlinedIcon/>},
-  ];
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} color="transparent" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} sx={{width: '100%'}}>
-            <Stack direction={'row'} alignItems={'center'}>
-              <IconButton
-                //color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-                edge="start"
-                sx={{
-                  marginRight: 5,
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" noWrap component="div" color={'text.primary'}>
-                Notes
-              </Typography>
-            </Stack>
-            <Stack direction={'row'} alignItems={'center'}>
-              <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                <DarkModeOutlinedIcon/>
-              </IconButton>
-            </Stack>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        {/* <Toolbar /> */}
-        <List>
-          {listItems.map((node, index) => (
-            <ListItemButton
-              key={node.name}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                {node.icon}
-              </ListItemIcon>
-              <ListItemText primary={node.name} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          ))}
-        </List>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>
+      <AppHeader colorMode={colorMode} handleDrawerToggle={handleDrawerToggle} open={open}/>
+      <AppSideNav open={open} />
+      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px', border: isBorder ? '1px solid red' : 'none', maxWidth:'1024px', marginX: 'auto'}}>
         
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -189,7 +77,7 @@ function NavigationModule() {
   );
 }
 
-export default function ToggleColorMode() {
+export default function NavigationPageWrapper() {
   const [mode, setMode] = React.useState('light');
   const colorMode = React.useMemo(
     () => ({
@@ -213,7 +101,7 @@ export default function ToggleColorMode() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <NavigationModule />
+        <NavigationPage />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
