@@ -8,6 +8,7 @@ import {
 //import classes from './App.module.css'
 import Login from './pages/login/login';
 import Notes from './pages/notes/notes';
+import Signup from './pages/signUp/signup';
 
 function App() {
   const defaultRouteHanler = () => {
@@ -21,6 +22,9 @@ function App() {
             <Route exact path={'/'} render={defaultRouteHanler}/>
             <Route path="/login">
               <Login/>
+            </Route>
+            <Route path="/register">
+              <Signup/>
             </Route>
             <Route path="/notes">
               <Notes/>
