@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 function Login() {
     const isBorder = toggleBorder;
     const history = useHistory();
-    function register(path) {
+    function routeTo(path) {
         history.push(path);
     }
     return (
@@ -39,8 +39,8 @@ function Login() {
                         </Stack>
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
-                        <Button variant='contained' size="small" disableElevation>Next</Button>
-                        <Button size="small" sx={{textTransform:'none'}} onClick={() => register('/register') }>Create account</Button>
+                        <Button variant='contained' size="small" disableElevation onClick={() => routeTo('/notes') }>Next</Button>
+                        <Button size="small" sx={{textTransform:'none'}} onClick={() => routeTo('/register') }>Create account</Button>
                     </CardActions>
                 </Card>
             </Stack>
