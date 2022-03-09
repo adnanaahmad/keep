@@ -9,13 +9,13 @@ import TextField from '@mui/material/TextField';
 import classes from './login.module.css';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {toggleBorder} from '../../../shared/styles/debugging-border';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const isBorder = toggleBorder;
-    const history = useHistory();
+    const navigate = useNavigate();
     function routeTo(path) {
-        history.push(path);
+        navigate(path);
     }
     return (
         <React.Fragment>

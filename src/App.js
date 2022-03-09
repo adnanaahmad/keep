@@ -1,36 +1,34 @@
 import * as React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect
+  Navigate
 } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 const Signup = React.lazy(() => import('./pages/auth/signUp/signup'));
 const Login = React.lazy(() => import('./pages/auth/login/login'));
 const Notes = React.lazy(() => import('./pages/nav/navigation'));
+const AllNotes = React.lazy(() => import('./pages/nav/notes/notes'));
+const Label = React.lazy(() => import('./pages/nav/label/label'));
+const Archive = React.lazy(() => import('./pages/nav/archive/archive'));
+const Trash = React.lazy(() => import('./pages/nav/trash/trash'));
 
 function App() {
-  const defaultRouteHanler = () => {
-    return (
-      <Redirect to='/login'/>
-    )
-  }
   return (
       <React.Suspense fallback={<CircularProgress />}>
         <Router>
-          <Switch>
-            <Route exact path={'/'} render={defaultRouteHanler}/>
-            <Route path="/login">
-              <Login/>
+          <Routes>
+            <Route path={'/'} element={<Navigate to='/login' replace/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Signup/>}/>
+            <Route path="/notes/*" element={<Notes/>}>
+              <Route path="all" element={<AllNotes />} />
+              <Route path="label" element={<Label />} />
+              <Route path="archive" element={<Archive />} />
+              <Route path="trash" element={<Trash />} />
             </Route>
-            <Route path="/register">
-              <Signup/>
-            </Route>
-            <Route path="/notes">
-              <Notes/>
-            </Route>
-          </Switch>
+          </Routes>
         </Router>
       </React.Suspense>
   );
