@@ -1,4 +1,5 @@
 //import * as React from 'react';
+import {Link} from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -53,36 +54,37 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function AppSideNav(props) {
   const listItems = [
-      {name: 'Notes', icon: <StickyNote2OutlinedIcon/>, route: '/notes/all'},
-      {name: 'Label', icon: <LabelOutlinedIcon/>, route: '/notes/label'},
+      {name: 'Notes', icon: <StickyNote2OutlinedIcon/>, route: 'all'},
+      {name: 'Label', icon: <LabelOutlinedIcon/>, route: 'label'},
       {name: 'Edit Label', icon: <EditOutlinedIcon/>, route: '/notes'},
-      {name: 'Archive', icon: <ArchiveOutlinedIcon/>, route: '/notes/archive'},
-      {name: 'Trash', icon: <DeleteOutlinedIcon/>, route: '/notes/trash'},
+      {name: 'Archive', icon: <ArchiveOutlinedIcon/>, route: 'archive'},
+      {name: 'Trash', icon: <DeleteOutlinedIcon/>, route: 'trash'},
   ];
   return(
       <Drawer variant="permanent" open={props.open}>
           <List>
           {listItems.map((node, index) => (
-              <ListItemButton
-              key={node.name}
-              sx={{
-                  minHeight: 48,
-                  justifyContent: props.open ? 'initial' : 'center',
-                  px: 2.5,
-              }}
-              onClick={() => props.routeTo(node.route)}
-              >
-                  <ListItemIcon
-                      sx={{
-                      minWidth: 0,
-                      mr: props.open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      }}
-                  >
-                      {node.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={node.name} sx={{ opacity: props.open ? 1 : 0 }} />
-              </ListItemButton>
+            <ListItemButton
+            component={Link}
+            to={node.route}
+            key={index} 
+            sx={{
+                minHeight: 48,
+                justifyContent: props.open ? 'initial' : 'center',
+                px: 2.5,
+            }}
+            >
+                <ListItemIcon
+                    sx={{
+                    minWidth: 0,
+                    mr: props.open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    }}
+                >
+                    {node.icon}
+                </ListItemIcon>
+                <ListItemText primary={node.name} sx={{ opacity: props.open ? 1 : 0 }} />
+            </ListItemButton>
           ))}
           </List>
       </Drawer>
