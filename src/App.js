@@ -8,7 +8,7 @@ import {
 import CircularProgress from '@mui/material/CircularProgress';
 const Signup = React.lazy(() => import('./pages/auth/signUp/signup'));
 const Login = React.lazy(() => import('./pages/auth/login/login'));
-const Notes = React.lazy(() => import('./pages/notes/notes'));
+const Notes = React.lazy(() => import('./pages/nav/navigation'));
 
 function App() {
   const defaultRouteHanler = () => {
