@@ -10,7 +10,7 @@ import {toggleBorder} from '../../shared/styles/debugging-border';
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const isBorder = toggleBorder;
 
-function NavigationPage() {
+function NavigationPage(props) {
   const useEffect = React.useEffect;
   const [open, setOpen] = React.useState(false);
   const colorMode = React.useContext(ColorModeContext);
@@ -19,8 +19,13 @@ function NavigationPage() {
     open ? setOpen(false) : setOpen(true);
   };
   useEffect(() => {
-    console.log('hello navigation');
-  }, []);
+    // preload modules
+    console.log('navigation');
+    props.data['AllNotes'].preload();
+    props.data['Archive'].preload();
+    props.data['Label'].preload();
+    props.data['Trash'].preload();
+  }, [props]);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -36,7 +41,7 @@ function NavigationPage() {
   );
 }
 
-export default function NavigationPageWrapper() {
+export default function NavigationPageWrapper(props) {
   const [mode, setMode] = React.useState('light');
   const colorMode = React.useMemo(
     () => ({
@@ -60,7 +65,7 @@ export default function NavigationPageWrapper() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <NavigationPage />
+        <NavigationPage data={props.data} />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
