@@ -24,6 +24,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Signup/>}/>
             <Route path="/notes/*" element={<Notes data={{AllNotes, Label, Archive, Trash}}/>}>
+              <Route path={''} element={<Navigate to='all' replace/>}/>
               <Route path="all" element={<AllNotes />} />
               <Route path="label" element={<Label />} />
               <Route path="archive" element={<Archive />} />
