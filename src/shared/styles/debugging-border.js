@@ -1,1 +1,1 @@
-export const toggleBorder = false;
+export const toggleBorder = true;
