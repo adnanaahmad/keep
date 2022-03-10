@@ -25,7 +25,7 @@ function NavigationPage(props) {
     props.data['Archive'].preload();
     props.data['Label'].preload();
     props.data['Trash'].preload();
-  }, [props]);
+  }, []);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
