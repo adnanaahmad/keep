@@ -25,14 +25,29 @@ export default class Notes extends React.Component {
   };
 
   onStart = () => {
-    this.setState({activeDrags: ++this.state.activeDrags});
+    //this.setState({activeDrags: ++this.state.activeDrags});
+    this.setState(prev => {
+      return {
+        activeDrags: prev.activeDrags + 1,
+      };
+    });
   };
 
   onStop = () => {
-    this.setState({activeDrags: --this.state.activeDrags});
+    //this.setState({activeDrags: --this.state.activeDrags});
+    this.setState(prev => {
+      return {
+        activeDrags: prev.activeDrags - 1,
+      };
+    });
   };
   onDrop = (e) => {
-    this.setState({activeDrags: --this.state.activeDrags});
+    //this.setState({activeDrags: --this.state.activeDrags});
+    this.setState(prev => {
+      return {
+        activeDrags: prev.activeDrags - 1,
+      };
+    });
     if (e.target.classList.contains("drop-target")) {
       alert("Dropped!");
       e.target.classList.remove('hovered');
