@@ -2,12 +2,17 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 import { toggleBorder } from '../../../shared/styles/debugging-border';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 class Note extends React.Component {
   state = {
     activeDrags: 0,
     deltaPosition: {
-      x: 0, y: 0
+      x: this.props.data.x, y: this.props.data.y
     },
   };
 
@@ -52,20 +57,44 @@ class Note extends React.Component {
       defaultPosition={{x: Number(deltaPosition.x), y: Number(deltaPosition.y)}} 
       nodeRef={nodeRef}
       >
-        <div className="box" ref={nodeRef}>
-          <div>I track my deltas</div>
-          <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
+        <div ref={nodeRef} style={{width: '180px', height: 'fit-content', float: 'left', cursor: 'move'}}>
+          <Card sx={{ width: '100%' }} variant='outlined'>
+            <CardContent>
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                Word of the Day
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                adjective
+              </Typography>
+              <Typography variant="body2">
+                x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Edit</Button>
+            </CardActions>
+          </Card>
         </div>
       </Draggable>
     );
   }
 }
 export default function Notes() {
+  const notes = [
+    {id: 1, title: 'one', description: 'move me anywhere on board', label: 'personal', x: 0, y:0 },
+    {id: 2, title: 'two', description: 'move me anywhere on board', label: 'personal', x: 50, y:0 },
+    {id: 3, title: 'three', description: 'move me anywhere on board', label: 'personal', x: 100, y:0 },
+    {id: 4, title: 'four', description: 'move me anywhere on board', label: 'personal', x: 150, y:0 },
+  ]
   const isBorder = toggleBorder;
   return(
     <Box sx={{ width: '100%', height:'500px', border: isBorder ? '1px solid blue' : 'none'}}>
       <div style={{height: '500px', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
-        <Note/>
+        {
+          notes.map((node, index) => (
+            <Note key={node.id} data={node}/>
+          ))
+        }
       </div>
     </Box>
   )
