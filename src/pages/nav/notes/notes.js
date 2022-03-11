@@ -5,7 +5,8 @@ import { toggleBorder } from '../../../shared/styles/debugging-border';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 class Note extends React.Component {
@@ -60,18 +61,17 @@ class Note extends React.Component {
         <div ref={nodeRef} style={{width: '180px', height: 'fit-content', float: 'left', cursor: 'move'}}>
           <Card sx={{ width: '100%' }} variant='outlined'>
             <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Word of the Day
-              </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
+                Note
               </Typography>
               <Typography variant="body2">
                 x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Edit</Button>
+              <IconButton color="primary" component="span" sx={{marginLeft:'auto'}}>
+                <EditOutlinedIcon />
+              </IconButton>
             </CardActions>
           </Card>
         </div>
