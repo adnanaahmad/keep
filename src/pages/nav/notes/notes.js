@@ -11,8 +11,7 @@ class Note extends React.Component {
     },
   };
 
-  // event handlers
-
+  // drag event
   handleDrag = (e, ui) => {
     const {x, y} = this.state.deltaPosition;
     this.setState({
@@ -23,6 +22,7 @@ class Note extends React.Component {
     });
   };
 
+  // drag start event
   onStart = () => {
     this.setState(prev => {
       return {
@@ -31,23 +31,13 @@ class Note extends React.Component {
     });
   };
 
+  // drop event
   onStop = () => {
     this.setState(prev => {
       return {
         activeDrags: prev.activeDrags - 1,
       };
     });
-  };
-  onDrop = (e) => {
-    this.setState(prev => {
-      return {
-        activeDrags: prev.activeDrags - 1,
-      };
-    });
-    if (e.target.classList.contains("drop-target")) {
-      alert("Dropped!");
-      e.target.classList.remove('hovered');
-    }
   };
 
   render() {
