@@ -15,6 +15,9 @@ class Note extends React.Component {
     deltaPosition: {
       x: this.props.data.x, y: this.props.data.y
     },
+    id: this.props.data.id,
+    title: this.props.data.title,
+    description: this.props.data.description
   };
 
   // drag event
@@ -48,7 +51,7 @@ class Note extends React.Component {
 
   render() {
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
-    const {deltaPosition} = this.state;
+    const {deltaPosition, title, description} = this.state;
     const nodeRef = React.createRef(null);
     return (
       <Draggable 
@@ -63,10 +66,11 @@ class Note extends React.Component {
           <Card sx={{ width: '100%' }} variant='outlined'>
             <CardContent>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                Note
+                {title}
               </Typography>
               <Typography variant="body2">
-                x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}
+                {description}
+                {/* x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)} */}
               </Typography>
             </CardContent>
             <CardActions>
@@ -84,10 +88,10 @@ class Note extends React.Component {
 }
 export default function Notes() {
   const notes = [
-    {id: 1, title: 'one', description: 'move me anywhere on board', label: 'personal', x: 0, y:0 },
-    {id: 2, title: 'two', description: 'move me anywhere on board', label: 'personal', x: 50, y:0 },
-    {id: 3, title: 'three', description: 'move me anywhere on board', label: 'personal', x: 100, y:0 },
-    {id: 4, title: 'four', description: 'move me anywhere on board', label: 'personal', x: 150, y:0 },
+    {id: 1, title: 'One', description: 'move me anywhere on board', label: 'personal', x: 0, y:0 },
+    {id: 2, title: 'Two', description: `Quickly capture what's on your mind and get a reminder later at the right place or time. Speak a voice memo on the go and have it automatically transcribed.`, label: 'personal', x: 50, y:0 },
+    {id: 3, title: 'Three', description: 'move me anywhere on board', label: 'personal', x: 100, y:0 },
+    {id: 4, title: 'Four', description: `The service also includes Google Docs, Google Sheets, Google Slides, Google Drawings, Google Forms, and Google Sites`, label: 'personal', x: 150, y:0 },
   ]
   const isBorder = toggleBorder;
   return(
