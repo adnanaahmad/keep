@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { Stack } from '@mui/material';
 
 class Note extends React.Component {
   state = {
@@ -95,14 +96,23 @@ export default function Notes() {
   ]
   const isBorder = toggleBorder;
   return(
-    <Box sx={{ width: '100%', height:'85vh', border: isBorder ? '1px solid blue' : 'none'}}>
-      <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
-        {
-          notes.map((node, index) => (
-            <Note key={node.id} data={node}/>
-          ))
-        }
-      </div>
-    </Box>
+    <Stack spacing={3}>
+      <Card sx={{ minWidth: '500px', height: '50px', marginX:'auto', boxShadow:5 }}>
+        <CardContent>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            Take a note...
+          </Typography>
+        </CardContent>
+      </Card>
+      <Box sx={{ width: '100%', height:'80vh', border: isBorder ? '1px solid blue' : 'none'}}>
+        <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
+          {
+            notes.map((node, index) => (
+              <Note key={node.id} data={node}/>
+            ))
+          }
+        </div>
+      </Box>
+    </Stack>
   )
 }
