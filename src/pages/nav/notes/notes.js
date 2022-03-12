@@ -91,8 +91,8 @@ export default function Notes() {
   ]
   const isBorder = toggleBorder;
   return(
-    <Box sx={{ width: '100%', height:'500px', border: isBorder ? '1px solid blue' : 'none'}}>
-      <div style={{height: '500px', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
+    <Box sx={{ width: '100%', height:'80vh', border: isBorder ? '1px solid blue' : 'none'}}>
+      <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
         {
           notes.map((node, index) => (
             <Note key={node.id} data={node}/>
