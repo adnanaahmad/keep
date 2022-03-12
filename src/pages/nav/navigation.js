@@ -34,7 +34,7 @@ function NavigationPage(props) {
       {/* Side Nav Bar */}
       <AppSideNav open={open} />
       {/* Router Outlet */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px', border: isBorder ? '1px solid red' : 'none', maxWidth:'1024px', marginX: 'auto'}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px', border: isBorder ? '1px solid red' : 'none', width:'100%'}}>
         <Outlet/>
       </Box>
     </Box>
