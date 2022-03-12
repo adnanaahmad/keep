@@ -57,6 +57,7 @@ class Note extends React.Component {
       onDrag={this.handleDrag} 
       defaultPosition={{x: Number(deltaPosition.x), y: Number(deltaPosition.y)}} 
       nodeRef={nodeRef}
+      cancel="strong"
       >
         <div ref={nodeRef} style={{width: '180px', height: 'fit-content', float: 'left', cursor: 'move'}}>
           <Card sx={{ width: '100%' }} variant='outlined'>
@@ -69,9 +70,11 @@ class Note extends React.Component {
               </Typography>
             </CardContent>
             <CardActions>
-              <IconButton color="primary" component="span" sx={{marginLeft:'auto'}}>
-                <EditOutlinedIcon />
-              </IconButton>
+              <strong style={{marginLeft: 'auto'}}>
+                <IconButton color="inherit" component="span">
+                  <EditOutlinedIcon />
+                </IconButton>
+              </strong>
             </CardActions>
           </Card>
         </div>
