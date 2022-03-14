@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
 import { updateNoteCoordinates } from '../../../modules/nav/slice/notesSlice';
 import { useDispatch } from 'react-redux';
+import NoteFormDialog from '../addNote/addNoteDialog';
 
 
 class Note extends React.Component {
@@ -53,10 +54,13 @@ class Note extends React.Component {
     });
     this.props.updatePositionAction(this.state.id, this.state.deltaPosition);
   };
-
+  onEdit = () => {
+    this.props.editNote({...this.state});
+  }
   render() {
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, title, description} = this.state;
+    const editHandler = this.onEdit;
     const nodeRef = React.createRef(null);
     return (
       <Draggable 
@@ -80,7 +84,7 @@ class Note extends React.Component {
             </CardContent>
             <CardActions>
               <strong style={{marginLeft: 'auto'}}>
-                <IconButton color="inherit" component="span">
+                <IconButton color="inherit" component="span" onClick={editHandler}>
                   <EditOutlinedIcon />
                 </IconButton>
               </strong>
@@ -93,9 +97,14 @@ class Note extends React.Component {
 }
 export default function Notes(props) {
   const isBorder = toggleBorder;
+  const dialogRef = React.useRef();
   const dispatch = useDispatch();
   function updatePositionAction(id, position) {
     dispatch(updateNoteCoordinates({id, x: position.x, y: position.y}));
+  }
+  function editNote(note) {
+    console.log(note);
+    dialogRef.current.handleClickOpen();
   }
   return(
     <Stack spacing={3}>
@@ -110,11 +119,12 @@ export default function Notes(props) {
         <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
           {
             props.data.map((node, index) => (
-              <Note key={node.id} data={node} updatePositionAction={updatePositionAction}/>
+              <Note key={node.id} data={node} updatePositionAction={updatePositionAction} editNote={editNote}/>
             ))
           }
         </div>
       </Box>
+      <NoteFormDialog ref={dialogRef}/>
     </Stack>
   )
 }
