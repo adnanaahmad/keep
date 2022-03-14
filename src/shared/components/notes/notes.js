@@ -9,6 +9,9 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
+import { updateNoteCoordinates } from '../../../modules/nav/slice/notesSlice';
+import { useDispatch } from 'react-redux';
+
 
 class Note extends React.Component {
   state = {
@@ -48,6 +51,7 @@ class Note extends React.Component {
         activeDrags: prev.activeDrags - 1,
       };
     });
+    this.props.updatePositionAction(this.state.id, this.state.deltaPosition);
   };
 
   render() {
@@ -89,6 +93,10 @@ class Note extends React.Component {
 }
 export default function Notes(props) {
   const isBorder = toggleBorder;
+  const dispatch = useDispatch();
+  function updatePositionAction(id, position) {
+    dispatch(updateNoteCoordinates({id, x: position.x, y: position.y}));
+  }
   return(
     <Stack spacing={3}>
       <Card sx={{ minWidth: '500px', height: '50px', marginX:'auto', boxShadow:5 }}>
@@ -102,7 +110,7 @@ export default function Notes(props) {
         <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
           {
             props.data.map((node, index) => (
-              <Note key={node.id} data={node}/>
+              <Note key={node.id} data={node} updatePositionAction={updatePositionAction}/>
             ))
           }
         </div>
