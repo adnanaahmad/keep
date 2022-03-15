@@ -115,7 +115,7 @@ export default function Notes(props) {
           </Typography>
         </CardContent>
       </Card>
-      <Box sx={{ width: '100%', height:'80vh', border: isBorder ? '1px solid blue' : 'none'}}>
+      <Box sx={{ width: '100%', height:'78vh', border: isBorder ? '1px solid blue' : 'none'}}>
         <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
           {
             props.data.map((node, index) => (
