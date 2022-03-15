@@ -10,14 +10,20 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useFormik } from 'formik';
 
 const NoteFormDialog = React.forwardRef((props, ref) => {
   const [open, setOpen] = React.useState(false);
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+      label: ''
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   React.useImperativeHandle(ref, () => ({
     handleClickOpen() {
@@ -38,26 +44,36 @@ const NoteFormDialog = React.forwardRef((props, ref) => {
             <TextField
               autoFocus
               id="title"
+              name="title"
               label="Title"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              error={formik.touched.title && Boolean(formik.errors.title)}
               fullWidth
               variant="standard"
             />
             <TextField
             id="description"
+            name="description"
             label="Description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            error={formik.touched.description && Boolean(formik.errors.description)}
             multiline
             rows={4}
             fullWidth
             variant="standard"
             />
             <FormControl variant="standard" fullWidth>
-              <InputLabel id="demo-simple-select-standard-label">Label</InputLabel>
+              <InputLabel id="select">Label</InputLabel>
               <Select
-                labelId="demo-simple-select-standard-label"
+                labelId="select"
                 id="label"
-                value={age}
-                onChange={handleChange}
-                label="label"
+                name="label"
+                label="Label"
+                value={formik.values.label}
+                onChange={formik.handleChange}
+                error={formik.touched.label && Boolean(formik.errors.label)}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -71,7 +87,7 @@ const NoteFormDialog = React.forwardRef((props, ref) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={formik.handleSubmit}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>
