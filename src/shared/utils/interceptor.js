@@ -1,14 +1,17 @@
 import axios from "axios";
 
-const baseURL = 'http://localhost:8080';
-const clientRequest = axios.create({baseURL});
+const baseURL = 'http://localhost:8080/api';
+const axiosInstance = axios.create({
+    baseURL,
+    headers: {Authorization: `Bearer token`}
+});
 
-// apiCall is a wrapper function that works as an interceptor
-
-export const apiCall = ({...options}) => {
-    clientRequest.defaults.headers.common.Authorization('Bearer Token');
-    onSuccess = response => response;
-    onError = error => error;
-    clientRequest(options).then(onSuccess).catch(onError);
-}
+// Add a request interceptor
+// axiosInstance.interceptors.request.use((config) => {
+//     // Do something before request is sent
+//     return config;
+//   }, (error) => {
+//     // Do something with request error
+//     return Promise.reject(error);
+// });
 
