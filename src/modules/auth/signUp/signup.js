@@ -19,7 +19,7 @@ function Signup() {
     }
     return (
         <React.Fragment>
-            <Stack justifyContent={'center'} alignItems={'center'} sx={{border: isBorder ? '2px solid red' : 'none', height: '100vh', paddingX:'.5rem'}}>
+            <Stack justifyContent={'center'} alignItems={'center'} sx={{border: isBorder ? '2px solid red' : 'none', height: 'inherit', paddingX:'.5rem', width: 'inherit'}}>
                 <Card variant="outlined" sx={{ width:'100%', maxWidth: 400, height: 'fit-content'}}>
                     <CardContent sx={{border: isBorder ? '1px solid blue' : 'none', mb:1}}>
                         <Stack alignItems={'center'} sx={{ mb: 4, border: isBorder ? '1px solid orange' : 'none' }} spacing={'1.2rem'}>
