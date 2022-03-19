@@ -10,10 +10,22 @@ import classes from './login.module.css';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {toggleBorder} from '../../../shared/styles/debugging-border';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
 function Login() {
     const isBorder = toggleBorder;
     const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+          email: '',
+          password: '',
+        },
+        onSubmit: (values) => {
+          alert(JSON.stringify(values, null, 2));
+          //routeTo('/notes');
+        },
+    });
+
     function routeTo(path) {
         navigate(path);
     }
@@ -34,12 +46,30 @@ function Login() {
                             </Stack>
                         </Stack>
                         <Stack component="form" spacing={2}>
-                            <TextField id="name" type="text" fullWidth label="Email" />
-                            <TextField id="password" type="password" fullWidth label="Password" />
+                            <TextField
+                            id="email"
+                            name="email"
+                            label="Email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            type="text"
+                            fullWidth
+                            />
+                            <TextField
+                            id="password"
+                            name="password"
+                            label="Password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            type="password"
+                            fullWidth
+                            />
                         </Stack>
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
-                        <Button variant='contained' size="small" disableElevation onClick={() => routeTo('/notes') }>Next</Button>
+                        <Button variant='contained' size="small" disableElevation onClick={formik.handleSubmit}>Next</Button>
                         <Button size="small" sx={{textTransform:'none'}} onClick={() => routeTo('/register') }>Create account</Button>
                     </CardActions>
                 </Card>
