@@ -10,10 +10,23 @@ import TextField from '@mui/material/TextField';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {toggleBorder} from '../../../shared/styles/debugging-border';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
 function Signup() {
     const isBorder = toggleBorder;
     const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: '',
+        },
+        onSubmit: (values) => {
+          alert(JSON.stringify(values, null, 2));
+          //routeTo('/notes');
+        },
+    });
+
     function login(path) {
         navigate(path);
     }
@@ -34,13 +47,40 @@ function Signup() {
                             </Stack>
                         </Stack>
                         <Stack component="form" spacing={2}>
-                            <TextField type="text" fullWidth label="Name" id="name" />
-                            <TextField type="email" fullWidth label="Email" id="email" />
-                            <TextField type="password" fullWidth label="Password" id="password" />
+                            <TextField
+                            id="name"
+                            name="name"
+                            label="Name"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            type="text"
+                            fullWidth
+                            />
+                            <TextField
+                            id="email"
+                            name="email"
+                            label="Email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            type="email"
+                            fullWidth
+                            />
+                            <TextField
+                            id="password"
+                            name="password"
+                            label="Password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            type="password"
+                            fullWidth                            
+                            />
                         </Stack>
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
-                        <Button variant='contained' size="small" disableElevation>Next</Button>
+                        <Button variant='contained' size="small" onClick={formik.handleSubmit} disableElevation>Next</Button>
                         <Button size="small" sx={{textTransform: 'none'}} onClick={() => login('/login') }>Login instead</Button>
                     </CardActions>
                 </Card>

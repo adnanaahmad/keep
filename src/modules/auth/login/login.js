@@ -53,7 +53,7 @@ function Login() {
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             error={formik.touched.email && Boolean(formik.errors.email)}
-                            type="text"
+                            type="email"
                             fullWidth
                             />
                             <TextField
