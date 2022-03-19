@@ -34,8 +34,8 @@ function Login() {
                             </Stack>
                         </Stack>
                         <Stack component="form" spacing={2}>
-                            <TextField fullWidth label="Email" id="fullWidth" />
-                            <TextField fullWidth label="Password" id="fullWidth" />
+                            <TextField id="name" type="text" fullWidth label="Email" />
+                            <TextField id="password" type="password" fullWidth label="Password" />
                         </Stack>
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
