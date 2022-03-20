@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { api as axios } from '../../../shared/utils/interceptor';
 import {apiRoute} from '../../../shared/constants/constants';
+import {catchAsync} from '../../../shared/utils/catchAsync';
 
 function Login() {
     const isBorder = toggleBorder;
@@ -32,18 +33,16 @@ function Login() {
     function routeTo(path) {
         navigate(path);
     }
-    async function loginUser(form) {
-        try {
-            const loginData = await axios({
-                method: 'post',
-                url: apiRoute.login,
-                data: form
-            });
-            console.log(loginData.data);
-        } catch (error) {
-            console.log(error.response.data);
-        }
-    }
+    
+    let loginUser = catchAsync(async form => {
+        const loginData = await axios({
+            method: 'post',
+            url: apiRoute.login,
+            data: form
+        });
+        console.log(loginData.data);
+    });
+
     return (
         <React.Fragment>
             <Stack justifyContent={'center'} alignItems={'center'} sx={{border: isBorder ? '2px solid red' : 'none', height: 'inherit', paddingX:'.5rem', width: 'inherit'}}>
