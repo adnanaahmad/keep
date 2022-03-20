@@ -34,7 +34,7 @@ function Login() {
             url: apiRoute.login,
             data: form
         });
-        console.log(loginData.data);
+        localStorage.setItem('token', loginData.data.token);
         routeTo('/notes');
     });
 
