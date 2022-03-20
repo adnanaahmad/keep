@@ -12,7 +12,7 @@ import {toggleBorder} from '../../../shared/styles/debugging-border';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { api as axios } from '../../../shared/utils/interceptor';
-import {apiRoute} from '../../../shared/constants/constants';
+import {apiRoute, httpMethod} from '../../../shared/constants/constants';
 import {catchAsync} from '../../../shared/utils/catchAsync';
 
 function Login() {
@@ -36,7 +36,7 @@ function Login() {
     
     let loginUser = catchAsync(async form => {
         const loginData = await axios({
-            method: 'post',
+            method: httpMethod.post,
             url: apiRoute.login,
             data: form
         });
