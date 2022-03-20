@@ -23,24 +23,19 @@ function Login() {
           email: '',
           password: '',
         },
-        onSubmit: (form) => {
-          console.log(form);
-          loginUser(form);
-          //routeTo('/notes');
-        },
+        onSubmit: (form) => loginUser(form),
     });
 
-    function routeTo(path) {
-        navigate(path);
-    }
+    let routeTo = (path) => navigate(path);
     
-    let loginUser = catchAsync(async form => {
+    let loginUser = catchAsync(async (form) => {
         const loginData = await axios({
             method: httpMethod.post,
             url: apiRoute.login,
             data: form
         });
         console.log(loginData.data);
+        routeTo('/notes');
     });
 
     return (
