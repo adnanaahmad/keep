@@ -1,13 +1,12 @@
 import axios from "axios";
+import { baseURL } from "../constants/constants";
 
-const baseURL = 'http://localhost:8080/api';
-
-export const axiosInstanceApi = axios.create({
+export const protectedApi = axios.create({
     baseURL,
     headers: {Authorization: `Bearer token`}
 });
 
-export const axiosInstance = axios.create({
+export const api = axios.create({
     baseURL,
 });
 // Add a request interceptor
