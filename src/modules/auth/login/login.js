@@ -11,6 +11,8 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {toggleBorder} from '../../../shared/styles/debugging-border';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { api as axios } from '../../../shared/utils/interceptor';
+import {apiRoute} from '../../../shared/constants/constants';
 
 function Login() {
     const isBorder = toggleBorder;
@@ -20,14 +22,27 @@ function Login() {
           email: '',
           password: '',
         },
-        onSubmit: (values) => {
-          alert(JSON.stringify(values, null, 2));
+        onSubmit: (form) => {
+          console.log(form);
+          loginUser(form);
           //routeTo('/notes');
         },
     });
 
     function routeTo(path) {
         navigate(path);
+    }
+    async function loginUser(form) {
+        try {
+            const loginData = await axios({
+                method: 'post',
+                url: apiRoute.login,
+                data: form
+            });
+            console.log(loginData.data);
+        } catch (error) {
+            console.log(error.response.data);
+        }
     }
     return (
         <React.Fragment>
