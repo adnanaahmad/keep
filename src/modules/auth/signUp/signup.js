@@ -20,6 +20,7 @@ function Signup() {
             name: '',
             email: '',
             password: '',
+            confirmPassword: ''
         },
         onSubmit: (values) => {
           alert(JSON.stringify(values, null, 2));
@@ -74,6 +75,16 @@ function Signup() {
                             value={formik.values.password}
                             onChange={formik.handleChange}
                             error={formik.touched.password && Boolean(formik.errors.password)}
+                            type="password"
+                            fullWidth                            
+                            />
+                           <TextField
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            value={formik.values.confirmPassword}
+                            onChange={formik.handleChange}
+                            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                             type="password"
                             fullWidth                            
                             />
