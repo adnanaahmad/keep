@@ -10,6 +10,7 @@ import lazyWithPreload from './shared/utils/preload';
 const AuthenticationModule = React.lazy(() => import('./modules/auth/auth'));
 const Signup = lazyWithPreload(() => import('./modules/auth/signUp/signup'));
 const Login = lazyWithPreload(() => import('./modules/auth/login/login'));
+const AccountStatus = lazyWithPreload(() => import('./modules/auth/accountStatus/accountStatus'));
 const NavigationModule = React.lazy(() => import('./modules/nav/navigation'));
 const AllNotes = lazyWithPreload(() => import('./modules/nav/pages/all/all'));
 const Label = lazyWithPreload(() => import('./modules/nav/pages/label/label'));
@@ -25,6 +26,7 @@ function App() {
               <Route path={''} element={<Navigate to='login' replace/>}/>
               <Route path="login" element={<Login/>}/>
               <Route path="register" element={<Signup/>}/>
+              <Route path="account-status" element={<AccountStatus/>}/>
             </Route>
             <Route path="/notes/*" element={<NavigationModule data={{AllNotes, Label, Archive, Trash}}/>}>
               <Route path={''} element={<Navigate to='all' replace/>}/>
