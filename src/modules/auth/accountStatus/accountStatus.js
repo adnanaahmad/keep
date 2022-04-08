@@ -28,10 +28,10 @@ function AccountStatus() {
                     url: apiRoute.verify,
                     headers: {Authorization: `Bearer ${token}`}
                 });
-                // show account status active screen
+                // account status active screen
                 setAccountStatus(() => 'active');
             } catch (error) {
-                // show something went wrong screen
+                // something went wrong screen
                 setAccountStatus(() => 'error');
             }
         };
