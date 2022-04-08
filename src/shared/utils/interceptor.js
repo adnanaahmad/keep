@@ -3,7 +3,7 @@ import { baseURL } from "../constants/constants";
 
 export const protectedApi = axios.create({
     baseURL,
-    headers: {Authorization: `Bearer token`}
+    headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
 });
 
 export const api = axios.create({
