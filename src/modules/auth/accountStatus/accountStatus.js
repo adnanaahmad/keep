@@ -18,22 +18,24 @@ function AccountStatus() {
     const [searchParams] = useSearchParams();
     const [token] = React.useState(searchParams.get("token"));
     const navigate = useNavigate();
+    const [accountStatus, setAccountStatus] = React.useState(null);
 
     useEffect(() => {
         let verifyUser = async (token) => {
             try {
                 await axios({
-                    method: httpMethod.post,
+                    method: httpMethod.patch,
                     url: apiRoute.verify,
-                    data: {token}
+                    headers: {Authorization: `Bearer ${token}`}
                 });
-                console.log('screen active account');
+                // show account status active screen
+                setAccountStatus(() => 'active');
             } catch (error) {
-                console.log(error);
+                // show something went wrong screen
+                setAccountStatus(() => 'error');
             }
         };
-        console.log(token);
-        if(token) {verifyUser(token)} else {console.log('screen verify account');};
+        if(token) {verifyUser(token)};
     }, [token]);
 
     function login(path) {
@@ -47,19 +49,47 @@ function AccountStatus() {
                     <CardContent sx={{border: isBorder ? '1px solid blue' : 'none', mb:1}}>
                         <Stack alignItems={'center'} sx={{ border: isBorder ? '1px solid orange' : 'none' }} spacing={'1.2rem'}>
                             <AutoStoriesIcon sx={{marginX: 'auto', display:'flex', fontSize: '3rem'}} color="primary"/>
-                            <Stack>
-                                <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
-                                    Verify
-                                </Typography>
-                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom component="div" textAlign={'center'}>
-                                    to sign in to your account. Check your inbox for verfication email.
-                                </Typography>
-                            </Stack>
+                            {
+                                !token &&
+                                <Stack>
+                                    <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
+                                        Verify
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom component="div" textAlign={'center'}>
+                                        to sign in to your account. Check your inbox for verfication email.
+                                    </Typography>
+                                </Stack>
+                            }
+                            {
+                                token && accountStatus && accountStatus === 'active' &&
+                                <Stack>
+                                    <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
+                                        Congrats
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom component="div" textAlign={'center'}>
+                                        your account is now active. You can now sign in to proceed.
+                                    </Typography>
+                                </Stack>
+                            }
+                                                        {
+                                token && accountStatus && accountStatus === 'error' &&
+                                <Stack>
+                                    <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
+                                        Something went wrong
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom component="div" textAlign={'center'}>
+                                        Please try again.
+                                    </Typography>
+                                </Stack>
+                            }
                         </Stack>
                     </CardContent>
-                    <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
-                        <Button variant='contained' size="small" sx={{textTransform: 'none'}} onClick={() => login('/login') }>Login</Button>
-                    </CardActions>
+                    {
+                        token && accountStatus && accountStatus === 'active' &&
+                        <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
+                            <Button variant='contained' size="small" sx={{textTransform: 'none'}} onClick={() => login('/login') }>Login</Button>
+                        </CardActions>
+                    }
                 </Card>
             </Stack>
         </React.Fragment>
