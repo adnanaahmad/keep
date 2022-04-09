@@ -29,17 +29,13 @@ function Signup() {
     });
     let routeTo = (path) => navigate(path);
     let signupUser = catchAsync(async (form) => {
-        const loginData = await axios({
+        await axios({
             method: httpMethod.post,
             url: apiRoute.signup,
             data: form
         });
-        localStorage.setItem('token', loginData.data.token);
         routeTo('/account-status');
     });
-    function login(path) {
-        navigate(path);
-    }
     return (
         <React.Fragment>
             <Stack justifyContent={'center'} alignItems={'center'} sx={{border: isBorder ? '2px solid red' : 'none', height: 'inherit', paddingX:'.5rem', width: 'inherit'}}>
@@ -101,7 +97,7 @@ function Signup() {
                     </CardContent>
                     <CardActions sx={{border: isBorder ? '1px solid pink' : 'none', padding:'16px', display:'flex', justifyContent: 'space-between'}}>
                         <Button variant='contained' size="small" onClick={formik.handleSubmit} disableElevation>Next</Button>
-                        <Button size="small" sx={{textTransform: 'none'}} onClick={() => login('/login') }>Login instead</Button>
+                        <Button size="small" sx={{textTransform: 'none'}} onClick={() => routeTo('/login') }>Login instead</Button>
                     </CardActions>
                 </Card>
             </Stack>
