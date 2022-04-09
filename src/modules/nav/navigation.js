@@ -6,9 +6,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import AppHeader from './appHeader/appHeader';
 import AppSideNav from './appSideNav/appSideNav';
 import {toggleBorder} from '../../shared/styles/debugging-border';
-import { api as axios } from '../../shared/utils/interceptor';
+import { api } from '../../shared/utils/interceptor';
+import axios from "axios";
 import {apiRoute, httpMethod} from '../../shared/constants/constants';
 import {catchAsync} from '../../shared/utils/catchAsync';
+import { useSelector } from 'react-redux';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const isBorder = toggleBorder;
@@ -17,32 +19,36 @@ function NavigationPage(props) {
   const useEffect = React.useEffect;
   const [open, setOpen] = React.useState(false);
   const colorMode = React.useContext(ColorModeContext);
-
+  const token = useSelector((state) => state.user.token);
   const handleDrawerToggle = () => {
     open ? setOpen(false) : setOpen(true);
   };
   useEffect(() => {
-    let getNotes = catchAsync(async () => {
-      const [notesData, labelData] = await axios.all([
-        axios({
+    let getNotesAndLabels = catchAsync(async () => {
+      const data = await axios.all([
+        api({
           method: httpMethod.get,
           url: apiRoute.notes,
+          headers: {Authorization: `Bearer ${token}`}
         }),
-        axios({
+        api({
           method: httpMethod.get,
           url: apiRoute.labels,
+          headers: {Authorization: `Bearer ${token}`}
         })
       ]);
-      console.log(notesData, labelData);
+      const notes = data[0].data.data.notes;
+      const labels = data[1].data.data.labels;
+      console.log(notes, labels);
     });
-    getNotes();
+    getNotesAndLabels();
     // preload modules
     console.log('navigation');
     props.data['AllNotes'].preload();
     props.data['Archive'].preload();
     props.data['Label'].preload();
     props.data['Trash'].preload();
-  }, [props.data]);
+  }, [props.data, token]);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

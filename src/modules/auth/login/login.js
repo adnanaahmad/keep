@@ -14,9 +14,12 @@ import { useFormik } from 'formik';
 import { api as axios } from '../../../shared/utils/interceptor';
 import {apiRoute, httpMethod} from '../../../shared/constants/constants';
 import {catchAsync} from '../../../shared/utils/catchAsync';
+import { setToken } from '../slice/userSlice';
+import { useDispatch } from 'react-redux';
 
 function Login() {
     const isBorder = toggleBorder;
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -35,6 +38,7 @@ function Login() {
             data: form
         });
         localStorage.setItem('token', loginData.data.token);
+        dispatch(setToken({token: loginData.data.token}));
         routeTo('/notes');
     });
 

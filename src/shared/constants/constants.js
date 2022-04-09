@@ -4,8 +4,8 @@ export const apiRoute = {
     login: '/users/login',
     signup: '/users/signup',
     verify: '/users/verifyAccount',
-    labels: '/users/labels',
-    notes: '/users/notes'
+    labels: '/labels',
+    notes: '/notes'
 }
 export const httpMethod = {
     get: 'get',

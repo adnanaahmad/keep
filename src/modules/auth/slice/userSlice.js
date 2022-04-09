@@ -9,9 +9,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setToken: (state, action) => {
-        // let index = state.allNotes.findIndex(note => note.id === action.payload.id);
-        // state.allNotes[index].x = action.payload.x;
-        // state.allNotes[index].y = action.payload.y;
+        state.token = action.payload.token;
     },
   },
 })
