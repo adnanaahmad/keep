@@ -6,6 +6,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import AppHeader from './appHeader/appHeader';
 import AppSideNav from './appSideNav/appSideNav';
 import {toggleBorder} from '../../shared/styles/debugging-border';
+import { api as axios } from '../../shared/utils/interceptor';
+import {apiRoute, httpMethod} from '../../shared/constants/constants';
+import {catchAsync} from '../../shared/utils/catchAsync';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const isBorder = toggleBorder;
@@ -19,6 +22,20 @@ function NavigationPage(props) {
     open ? setOpen(false) : setOpen(true);
   };
   useEffect(() => {
+    let getNotes = catchAsync(async () => {
+      const [notesData, labelData] = await axios.all([
+        axios({
+          method: httpMethod.get,
+          url: apiRoute.notes,
+        }),
+        axios({
+          method: httpMethod.get,
+          url: apiRoute.labels,
+        })
+      ]);
+      console.log(notesData, labelData);
+    });
+    getNotes();
     // preload modules
     console.log('navigation');
     props.data['AllNotes'].preload();
