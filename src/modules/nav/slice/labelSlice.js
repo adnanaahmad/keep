@@ -21,10 +21,13 @@ export const labelSlice = createSlice({
     deleteLabel: (state, action) => {
      // state.value += action.payload
     },
+    setLabelsData: (state, action) => {
+      state.labels = action.payload.labels;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { createLabel, updateLabel, deleteLabel } = labelSlice.actions;
+export const { createLabel, updateLabel, deleteLabel, setLabelsData } = labelSlice.actions;
 
 export default labelSlice.reducer;

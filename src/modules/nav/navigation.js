@@ -10,13 +10,15 @@ import { api } from '../../shared/utils/interceptor';
 import axios from "axios";
 import {apiRoute, httpMethod} from '../../shared/constants/constants';
 import {catchAsync} from '../../shared/utils/catchAsync';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLabelsData } from './slice/labelSlice';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const isBorder = toggleBorder;
 
 function NavigationPage(props) {
   const useEffect = React.useEffect;
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const colorMode = React.useContext(ColorModeContext);
   const token = useSelector((state) => state.userSlice.token);
@@ -39,6 +41,7 @@ function NavigationPage(props) {
       ]);
       const notes = data[0].data.data.notes;
       const labels = data[1].data.data.labels;
+      dispatch(setLabelsData({labels}));
       console.log(notes, labels);
     });
     getNotesAndLabels();
@@ -48,7 +51,7 @@ function NavigationPage(props) {
     props.data['Archive'].preload();
     props.data['Label'].preload();
     props.data['Trash'].preload();
-  }, [props.data, token]);
+  }, [props.data, token, dispatch]);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
