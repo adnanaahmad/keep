@@ -19,7 +19,7 @@ function NavigationPage(props) {
   const useEffect = React.useEffect;
   const [open, setOpen] = React.useState(false);
   const colorMode = React.useContext(ColorModeContext);
-  const token = useSelector((state) => state.user.token);
+  const token = useSelector((state) => state.userSlice.token);
   const handleDrawerToggle = () => {
     open ? setOpen(false) : setOpen(true);
   };

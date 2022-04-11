@@ -9,7 +9,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
-import { updateNoteCoordinates } from '../../../modules/nav/slice/notesSlice';
+import { updateNoteCoordinates } from '../../../modules/nav/slice/noteSlice';
 import { useDispatch } from 'react-redux';
 import NoteFormDialog from '../addNote/addNoteDialog';
 

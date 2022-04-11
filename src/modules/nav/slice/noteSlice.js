@@ -8,17 +8,17 @@ const notes = [
 ]
 
 const initialState = {
-  allNotes: notes,
+  notes,
 }
 
-export const notesSlice = createSlice({
-  name: 'notes',
+export const noteSlice = createSlice({
+  name: 'noteSlice',
   initialState,
   reducers: {
     updateNoteCoordinates: (state, action) => {
-        let index = state.allNotes.findIndex(note => note.id === action.payload.id);
-        state.allNotes[index].x = action.payload.x;
-        state.allNotes[index].y = action.payload.y;
+        let index = state.notes.findIndex(note => note.id === action.payload.id);
+        state.notes[index].x = action.payload.x;
+        state.notes[index].y = action.payload.y;
     },
     addNote: (state) => {
       //state.value -= 1
@@ -30,6 +30,6 @@ export const notesSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateNoteCoordinates, addNote, deleteNote } = notesSlice.actions
+export const { updateNoteCoordinates, addNote, deleteNote } = noteSlice.actions
 
-export default notesSlice.reducer
+export default noteSlice.reducer

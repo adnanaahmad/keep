@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import notesReducer from '../modules/nav/slice/notesSlice';
+import noteReducer from '../modules/nav/slice/noteSlice';
 import userReducer from '../modules/auth/slice/userSlice';
+import labelReducer from '../modules/nav/slice/labelSlice';
 
 export const store = configureStore({
   reducer: {
-      notes: notesReducer,
-      user: userReducer
+      userSlice: userReducer,
+      noteSlice: noteReducer,
+      labelSlice: labelReducer
   },
 })
