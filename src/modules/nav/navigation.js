@@ -12,6 +12,7 @@ import {apiRoute, httpMethod} from '../../shared/constants/constants';
 import {catchAsync} from '../../shared/utils/catchAsync';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLabelsData } from './slice/labelSlice';
+import { setNotesData } from './slice/noteSlice';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const isBorder = toggleBorder;
@@ -41,8 +42,9 @@ function NavigationPage(props) {
       ]);
       const notes = data[0].data.data.notes;
       const labels = data[1].data.data.labels;
+      dispatch(setNotesData({notes}));
       dispatch(setLabelsData({labels}));
-      console.log(notes, labels);
+      //console.log(notes, labels);
     });
     getNotesAndLabels();
     // preload modules

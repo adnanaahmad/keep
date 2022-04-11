@@ -20,7 +20,7 @@ class Note extends React.Component {
     deltaPosition: {
       x: this.props.data.x, y: this.props.data.y
     },
-    id: this.props.data.id,
+    id: this.props.data._id,
     title: this.props.data.title,
     description: this.props.data.description
   };
@@ -119,7 +119,7 @@ export default function Notes(props) {
         <div style={{height: '100%', width: '100%', position: 'relative', overflow: 'auto', padding: '0', border: isBorder ? '5px solid yellow' : 'none'}}>
           {
             props.data.map((node, index) => (
-              <Note key={node.id} data={node} updatePositionAction={updatePositionAction} editNote={editNote}/>
+              <Note key={node._id} data={node} updatePositionAction={updatePositionAction} editNote={editNote}/>
             ))
           }
         </div>
