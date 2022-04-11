@@ -1,4 +1,4 @@
-//import * as React from 'react';
+import * as React from 'react';
 import {Link} from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -11,6 +11,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -53,19 +54,33 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function AppSideNav(props) {
-  const listItems = [
-      {name: 'Notes', icon: <StickyNote2OutlinedIcon/>, route: 'all'},
-      {name: 'Label', icon: <LabelOutlinedIcon/>, route: 'label'},
-      {name: 'Edit Label', icon: <EditOutlinedIcon/>, route: '/notes'},
-      {name: 'Archive', icon: <ArchiveOutlinedIcon/>, route: 'archive'},
-      {name: 'Trash', icon: <DeleteOutlinedIcon/>, route: 'trash'},
-  ];
+  const useEffect = React.useEffect;
+  let labels = useSelector((state) => state.labelSlice.labels);
+  const [listItems, setListItems] = React.useState([]);
+
+  useEffect(() => {
+    const labelsArray = labels.map(label => ({
+      ...label,
+      route: `label?id=${label._id}`,
+      icon: <LabelOutlinedIcon/>
+    }));
+    setListItems(() => {
+      return [
+        {name: 'Notes', icon: <StickyNote2OutlinedIcon/>, route: 'all'},
+        ...[...labelsArray],
+        {name: 'Edit Label', icon: <EditOutlinedIcon/>},
+        {name: 'Archive', icon: <ArchiveOutlinedIcon/>, route: 'archive'},
+        {name: 'Trash', icon: <DeleteOutlinedIcon/>, route: 'trash'},
+      ];
+    });
+
+  }, [labels]);
   return(
       <Drawer variant="permanent" open={props.open}>
           <List>
           {listItems.map((node, index) => (
             <ListItemButton
-            component={Link}
+            component={node.route ? Link : ListItemButton}
             to={node.route}
             key={index} 
             sx={{
