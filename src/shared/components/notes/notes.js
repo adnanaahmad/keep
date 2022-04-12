@@ -10,9 +10,11 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
 import { updateNoteCoordinates } from '../../../modules/nav/slice/noteSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NoteFormDialog from '../addNote/addNoteDialog';
-
+import { api as axios } from '../../../shared/utils/interceptor';
+import {apiRoute, httpMethod} from '../../../shared/constants/constants';
+import {catchAsync} from '../../../shared/utils/catchAsync';
 
 class Note extends React.Component {
   state = {
@@ -97,10 +99,20 @@ class Note extends React.Component {
 }
 export default function Notes(props) {
   const isBorder = toggleBorder;
+  const token = useSelector((state) => state.userSlice.token);
   const dialogRef = React.useRef();
   const dispatch = useDispatch();
+  let updateNote = catchAsync(async (note) => {
+    await axios({
+      method: httpMethod.patch,
+      url: apiRoute.notes + '/' + note.id,
+      headers: {Authorization: `Bearer ${token}`},
+      data: {x: note.x, y: note.y}
+    });
+  });
   function updatePositionAction(id, position) {
     dispatch(updateNoteCoordinates({id, x: position.x, y: position.y}));
+    updateNote({id, x: position.x, y: position.y});
   }
   function editNote(note) {
     console.log(note);
