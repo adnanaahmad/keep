@@ -26,9 +26,9 @@ const NoteFormDialog = React.forwardRef((props, ref) => {
   });
 
   React.useImperativeHandle(ref, () => ({
-    handleClickOpen(createNote, id = null) {
-      console.log(createNote);
+    handleClickOpen(createNote, note = null) {
       if (!createNote) {
+        console.log(note);
         formik.setFieldValue('title', 'title');
         formik.setFieldValue('description', 'title');
         formik.setFieldValue('label', '');

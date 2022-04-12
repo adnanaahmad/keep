@@ -116,8 +116,8 @@ export default function Notes(props) {
     updateNote({id, x: position.x, y: position.y});
   }
   function editNote(note) {
-    console.log(note);
-    dialogRef.current.handleClickOpen(false);
+    const {id, title, description, label} = note;
+    dialogRef.current.handleClickOpen(false, {id, title, description, label});
   }
   function createNote() {
     dialogRef.current.handleClickOpen(true);
