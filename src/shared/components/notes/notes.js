@@ -24,7 +24,8 @@ class Note extends React.Component {
     },
     id: this.props.data._id,
     title: this.props.data.title,
-    description: this.props.data.description
+    description: this.props.data.description,
+    label: this.props.data.label
   };
 
   // drag event
@@ -116,11 +117,14 @@ export default function Notes(props) {
   }
   function editNote(note) {
     console.log(note);
-    dialogRef.current.handleClickOpen();
+    dialogRef.current.handleClickOpen(false);
+  }
+  function createNote() {
+    dialogRef.current.handleClickOpen(true);
   }
   return(
     <Stack spacing={3}>
-      <Card sx={{ minWidth: '500px', height: '50px', marginX:'auto', boxShadow:5 }}>
+      <Card sx={{ minWidth: '500px', height: '50px', marginX:'auto', boxShadow:5, cursor: 'pointer' }} onClick={createNote}>
         <CardContent>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             Take a note...
